@@ -63,6 +63,9 @@ public class RxPermissionsFragment extends Fragment {
             }
             mSubjects.remove(permissions[i]);
             boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+            if (granted){
+                granted &= PermissionUtils.reCheckPermissions(permissions[i]);
+            }
             subject.onNext(new Permission(permissions[i], granted, shouldShowRequestPermissionRationale[i]));
             subject.onCompleted();
         }
